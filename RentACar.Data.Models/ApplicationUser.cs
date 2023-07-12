@@ -6,6 +6,7 @@
     {
         public ApplicationUser()
         {
+            this.Id = Guid.NewGuid();
             this.RentedCars = new HashSet<Car>();
         }
         public virtual ICollection<Car> RentedCars { get; set; }

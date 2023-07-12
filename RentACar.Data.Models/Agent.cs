@@ -8,6 +8,7 @@
     {
         public Agent()
         {
+            this.Id = Guid.NewGuid();
             this.OwnedCars = new HashSet<Car>();    
         }
 

@@ -6,6 +6,11 @@
 
     public class Order
     {
+        public Order()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         [Key]
         public Guid Id { get; set; }
 
