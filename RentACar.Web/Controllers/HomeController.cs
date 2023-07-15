@@ -3,20 +3,24 @@
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
-
+    using RentACar.Services.Data.Interfaces;
     using RentACar.Web.ViewModels.Home;
 
     public class HomeController : Controller
     {
-       
-        public HomeController()
+        private readonly ILocationService locationService;
+
+        public HomeController(ILocationService locationService)
         {
-            
+            this.locationService = locationService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<IndexViewModel> viewModel =
+                await this.locationService.AllAddressesAsync();
+
+            return View(viewModel);
         }
 
 

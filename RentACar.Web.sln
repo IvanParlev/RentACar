@@ -3,19 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Web", "RentACar.Web\RentACar.Web.csproj", "{5BF39DF2-CE01-4B04-A5CA-5F745BD6B903}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Web", "RentACar.Web\RentACar.Web.csproj", "{5BF39DF2-CE01-4B04-A5CA-5F745BD6B903}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Common", "Common\RentACar.Common.csproj", "{980B1E4B-35C2-4EA4-98B8-3B01592C3B7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Common", "Common\RentACar.Common.csproj", "{980B1E4B-35C2-4EA4-98B8-3B01592C3B7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{6557D851-DBA6-43B2-BA58-EF5B22B8ACA7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3074F61C-1F8C-45F3-9484-BB05286C5BF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Data", "RentACar.Data\RentACar.Data.csproj", "{BF83863A-53A2-4152-A7A1-9E9BA30DAE59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Data", "RentACar.Data\RentACar.Data.csproj", "{BF83863A-53A2-4152-A7A1-9E9BA30DAE59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Data.Models", "RentACar.Data.Models\RentACar.Data.Models.csproj", "{F41BC0D0-FE00-44C4-82F4-AE4265418A00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Data.Models", "RentACar.Data.Models\RentACar.Data.Models.csproj", "{F41BC0D0-FE00-44C4-82F4-AE4265418A00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Web.ViewModels", "RentACar.Web.ViewModels\RentACar.Web.ViewModels.csproj", "{FA957300-50AC-43CB-9D2D-E6FE5F1AB5E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Web.ViewModels", "RentACar.Web.ViewModels\RentACar.Web.ViewModels.csproj", "{FA957300-50AC-43CB-9D2D-E6FE5F1AB5E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5F3AD922-B4C4-4F82-9B82-FA5807C0805F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Services.Data", "RentACar.Services.Data\RentACar.Services.Data.csproj", "{E0E115B5-DA2C-49AB-B519-7E2D87D9BF5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Web.Infastructure", "RentACar.Web.Infastructure\RentACar.Web.Infastructure.csproj", "{C78BA246-E03E-42E6-B6CD-1383520D10F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +49,14 @@ Global
 		{FA957300-50AC-43CB-9D2D-E6FE5F1AB5E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA957300-50AC-43CB-9D2D-E6FE5F1AB5E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA957300-50AC-43CB-9D2D-E6FE5F1AB5E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0E115B5-DA2C-49AB-B519-7E2D87D9BF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0E115B5-DA2C-49AB-B519-7E2D87D9BF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0E115B5-DA2C-49AB-B519-7E2D87D9BF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0E115B5-DA2C-49AB-B519-7E2D87D9BF5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C78BA246-E03E-42E6-B6CD-1383520D10F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C78BA246-E03E-42E6-B6CD-1383520D10F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C78BA246-E03E-42E6-B6CD-1383520D10F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C78BA246-E03E-42E6-B6CD-1383520D10F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +66,8 @@ Global
 		{BF83863A-53A2-4152-A7A1-9E9BA30DAE59} = {3074F61C-1F8C-45F3-9484-BB05286C5BF8}
 		{F41BC0D0-FE00-44C4-82F4-AE4265418A00} = {3074F61C-1F8C-45F3-9484-BB05286C5BF8}
 		{FA957300-50AC-43CB-9D2D-E6FE5F1AB5E2} = {6557D851-DBA6-43B2-BA58-EF5B22B8ACA7}
+		{E0E115B5-DA2C-49AB-B519-7E2D87D9BF5C} = {5F3AD922-B4C4-4F82-9B82-FA5807C0805F}
+		{C78BA246-E03E-42E6-B6CD-1383520D10F2} = {6557D851-DBA6-43B2-BA58-EF5B22B8ACA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C7AB64C-2A01-4B53-9259-B37D90233DA5}

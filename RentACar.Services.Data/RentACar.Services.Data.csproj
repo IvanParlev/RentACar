@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\RentACar.Common.csproj" />
+    <ProjectReference Include="..\RentACar.Data.Models\RentACar.Data.Models.csproj" />
+    <ProjectReference Include="..\RentACar.Data\RentACar.Data.csproj" />
+    <ProjectReference Include="..\RentACar.Web.ViewModels\RentACar.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

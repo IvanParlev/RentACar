@@ -1,16 +1,31 @@
-﻿@{
+﻿@model IEnumerable<IndexViewModel>
+
+@{
 	ViewData["Title"] = "Home";
+	var address = Model.ToList();
 }
 <body>
-	<h1 style="text-align:center" id="myTop">
-		Rent a Car - Find and book your car!
-	</h1>
+	<div style="text-align:center" id="myTop">
+		<h1>
+			Rent a Car - Find and book your car!
+		</h1>
+	</div>
+	<hr></hr>
 	<h2 style="text-align:right">
 		Our Locations
 	</h2>
 	<p style="text-align:right">
 		Rent a Car has offices in all major airports and cities of Bulgaria.
 	</p>
+	@for (int i = 0; i < address.Count(); i++)
+	{
+		var location = address[i];
+		<div style="text-align:right">
+			<p>
+				@location.Id. @location.Address
+			</p>
+		</div>
+	}
 	<h3 style="text-align:left">
 		Our Reviews
 	</h3>

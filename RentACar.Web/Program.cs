@@ -5,8 +5,10 @@ namespace RentACar.Web
 
     using Data;
     using RentACar.Data.Models;
+	using RentACar.Web.Infastructure.Extensions;
+	using RentACar.Services.Data.Interfaces;
 
-    public class Program
+	public class Program
     {
         public static void Main(string[] args)
         {
@@ -32,6 +34,9 @@ namespace RentACar.Web
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
                 .AddEntityFrameworkStores<RentACarDbContext>();
+
+            builder.Services.AddApplicationServices(typeof(ILocationService));
+          
             builder.Services.AddControllersWithViews();
 
             WebApplication app = builder.Build();

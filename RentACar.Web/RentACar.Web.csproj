@@ -19,6 +19,8 @@
     <ProjectReference Include="..\Common\RentACar.Common.csproj" />
     <ProjectReference Include="..\RentACar.Data.Models\RentACar.Data.Models.csproj" />
     <ProjectReference Include="..\RentACar.Data\RentACar.Data.csproj" />
+    <ProjectReference Include="..\RentACar.Services.Data\RentACar.Services.Data.csproj" />
+    <ProjectReference Include="..\RentACar.Web.Infastructure\RentACar.Web.Infastructure.csproj" />
     <ProjectReference Include="..\RentACar.Web.ViewModels\RentACar.Web.ViewModels.csproj" />
   </ItemGroup>
 
