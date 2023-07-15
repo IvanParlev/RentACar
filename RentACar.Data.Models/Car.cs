@@ -7,6 +7,11 @@
 
     public class Car
     {
+        public Car()
+        {
+            this.Reviews = new HashSet<Review>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -48,5 +53,7 @@
         public Guid? RenterId { get; set; }
 
         public virtual ApplicationUser? Renter { get; set; }
+
+        public virtual ICollection<Review>? Reviews { get; set; } 
     }
 }

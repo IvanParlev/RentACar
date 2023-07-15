@@ -24,6 +24,8 @@
 
         public DbSet<Agent> Agents { get; set; } = null!;
 
+        public DbSet<Review> Reviews { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             Assembly configAssembly = Assembly.GetAssembly(typeof(RentACarDbContext)) ?? Assembly.GetExecutingAssembly();

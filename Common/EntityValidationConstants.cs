@@ -36,5 +36,11 @@
         {
             public const int DaysRentedMinValue = 1;
         }
+
+        public static class Review
+        {
+            public const int CommentMinLength = 10;
+            public const int CommentMaxLength = 500;
+        }
     }
 }
