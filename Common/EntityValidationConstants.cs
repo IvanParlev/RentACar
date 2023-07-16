@@ -14,8 +14,10 @@
             public const int ModelMaxLength = 50;
 
             public const int DescriptionMaxLength = 500;
+            public const int DescriptionMinLength = 50;
 
             public const string PricePerDayMinValue = "0";
+            public const string PricePerDayMaxValue = "300";
 
             public const int ImageUrlMaxLength = 2048;
         }
