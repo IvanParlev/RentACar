@@ -3,7 +3,9 @@
     using RentACar.Data.Models.Enums;
     using RentACar.Web.ViewModels.Category;
     using System.ComponentModel.DataAnnotations;
+
     using static Common.EntityValidationConstants.Car;
+    using static Common.ApplicationConstants;
 
     public class CarFormModel
     {
@@ -16,9 +18,11 @@
         [StringLength(ModelMaxLength, MinimumLength = ModelMinLength)]
         public string Model { get; set; } = null!;
 
+        [Range(MinYearProduced, ReleaseYear)]
         [Display(Name = "Year of Manufacture")]
         public int Year { get; set; }
 
+        [Range(MinSeatsValue, MaxSeatsValue)]
         [Display(Name = "Number of Seats")]
         public int NumberOfSeats { get; set; }
 

@@ -25,15 +25,15 @@
 							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="All">Car Fleet</a>
+							<a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="All">Car Fleet</a>
 						</li>
 						@if (this.User.Identity?.IsAuthenticated ?? false)
 						{
 							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a>
+								<a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Add">Add Car</a>
+								<a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Add">Add Car</a>
 							</li>
 						}
 					</ul>

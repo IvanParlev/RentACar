@@ -8,7 +8,7 @@ namespace RentACar.Web
 	using RentACar.Web.Infastructure.Extensions;
 	using RentACar.Services.Data.Interfaces;
 
-	public class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -19,6 +19,7 @@ namespace RentACar.Web
             builder.Services.
                 AddDbContext<RentACarDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {

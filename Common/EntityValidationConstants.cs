@@ -16,6 +16,11 @@
             public const int DescriptionMaxLength = 500;
             public const int DescriptionMinLength = 50;
 
+            public const int MinYearProduced = 2018;
+
+            public const int MinSeatsValue = 2;
+            public const int MaxSeatsValue = 7;
+
             public const string PricePerDayMinValue = "0";
             public const string PricePerDayMaxValue = "300";
 
