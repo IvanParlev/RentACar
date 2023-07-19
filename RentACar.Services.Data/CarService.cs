@@ -1,14 +1,14 @@
 ﻿namespace RentACar.Services.Data
 {
     using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Threading.Tasks;
     using RentACar.Data.Models;
     using RentACar.Services.Data.Interfaces;
     using RentACar.Services.Data.Models.Car;
     using RentACar.Web.Data;
     using RentACar.Web.ViewModels.Car;
     using RentACar.Web.ViewModels.Car.Enums;
-    using System;
-    using System.Threading.Tasks;
 
     public class CarService : ICarService
     {
@@ -92,20 +92,67 @@
 
             await this.dbContext.Cars.AddAsync(newCar);
             await this.dbContext.SaveChangesAsync();
+		}
+
+		public async Task EditCarByIdAndFormModel(int carId, CarFormModel formModel)
+		{
+			Car car = await this.dbContext
+				.Cars
+				.Where(c => c.IsActive)
+				.FirstAsync(c => c.Id == carId);
+
+			car.Model = formModel.Model;
+			car.Year = formModel.Year;
+			car.NumberOfSeats = formModel.NumberOfSeats;
+			car.GearboxType = formModel.GearboxType;
+			car.FuelType = formModel.FuelType;
+			car.Description = formModel.Description;
+			car.ImageUrl = formModel.ImageUrl;
+			car.PricePerDay = formModel.PricePerDay;
+			car.CategoryId = formModel.CategoryId;
+
+            await this.dbContext.SaveChangesAsync();
+		}
+
+		public async Task<bool> ExistsByIdAsync(int carId)
+        {
+            bool result = await this.dbContext
+               .Cars
+               .Where(c => c.IsActive)
+               .AnyAsync(c => c.Id == carId);
+
+            return result;
         }
 
-        public async Task<CarDetailsViewModel?> GetDetailsByIdAsync(int carId)
+        public async Task<CarFormModel> GetCarForEditByIdAsync(int carId)
         {
-            Car? car = await this.dbContext
+            Car car = await this.dbContext
+               .Cars
+               .Include(c => c.Category)
+               .Where(c => c.IsActive)
+               .FirstAsync(c => c.Id == carId);
+
+            return new CarFormModel
+            {
+                Model = car.Model,
+                Year = car.Year,
+                Description = car.Description,
+                ImageUrl = car.ImageUrl,
+                PricePerDay = car.PricePerDay,
+                CategoryId = car.CategoryId,
+                FuelType = car.FuelType,
+                GearboxType = car.GearboxType,
+                NumberOfSeats = car.NumberOfSeats
+            };
+        }
+
+        public async Task<CarDetailsViewModel> GetDetailsByIdAsync(int carId)
+        {
+            Car car = await this.dbContext
                 .Cars
                 .Include(c => c.Category)
                 .Where(c => c.IsActive)
-                .FirstOrDefaultAsync(c => c.Id == carId);
-
-            if (car == null)
-            {
-                return null;
-            }
+                .FirstAsync(c => c.Id == carId);
 
             return new CarDetailsViewModel
             {

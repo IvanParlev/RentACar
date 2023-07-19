@@ -8,6 +8,8 @@
     using RentACar.Web.Infastructure.Extensions;
     using RentACar.Web.ViewModels.Car;
 
+    using static Common.NotificationMessagesConstants;
+   
     [Authorize]
     public class CarController : Controller
     {
@@ -43,6 +45,8 @@
                 await this.agentService.AgentExistsByUserIdAsync(this.User.GetId()!);
             if (!isAgent)
             {
+                this.TempData[ErrorMessage] = "You must become an agent in order to add new cars!";
+
                 return this.RedirectToAction("Become", "Agent");
             }
             try
@@ -57,8 +61,7 @@
             }
             catch (Exception)
             {
-
-                throw;
+                return this.GeneralError();
             }
 
 
@@ -71,6 +74,8 @@
                 await this.agentService.AgentExistsByUserIdAsync(this.User.GetId()!);
             if (!isAgent)
             {
+                this.TempData[ErrorMessage] = "You must become an agent in order to add new cars!";
+
                 return this.RedirectToAction("Become", "Agent");
             }
 
@@ -95,8 +100,11 @@
                    await this.agentService.GetAgentIdByUserIdAsync(this.User.GetId()!);
 
                 await this.carService.CreateAsync(formModel, agentId!);
+
+                this.TempData[SuccessMessage] = "Car was added successfully!";
+
             }
-            catch (Exception _)
+            catch (Exception)
             {
                 this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add you new car!");
                 formModel.Categories = await this.categoryService.AllCategoriesAsync();
@@ -110,15 +118,102 @@
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
-            CarDetailsViewModel? viewModel = await this.carService
-                .GetDetailsByIdAsync(id);
-            if (viewModel == null)
+            bool carExists = await this.carService
+                .ExistsByIdAsync(id);
+            if (!carExists)
             {
-                //TODO: Error pages 
+                this.TempData[ErrorMessage] = "Car with the provided id does not exist!";
 
                 return this.RedirectToAction("All", "Car");
             }
+            CarDetailsViewModel viewModel = await this.carService
+                .GetDetailsByIdAsync(id);
+
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            bool carExists = await this.carService
+                .ExistsByIdAsync(id);
+            if (!carExists)
+            {
+                this.TempData[ErrorMessage] = "Car with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Car");
+            }
+
+            bool isUserAgent = await this.agentService
+                .AgentExistsByUserIdAsync(this.User.GetId()!);
+            if (!isUserAgent)
+            {
+                this.TempData[ErrorMessage] = "You must become an agent in order to edit car info!";
+
+                return this.RedirectToAction("Become", "Agent");
+            }
+            try
+            {
+                CarFormModel formModel = await this.carService
+               .GetCarForEditByIdAsync(id);
+                formModel.Categories = await this.categoryService.AllCategoriesAsync();
+
+                return this.View(formModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CarFormModel formModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                formModel.Categories = await this.categoryService.AllCategoriesAsync();
+
+                return this.View(formModel);
+            }
+
+            bool carExists = await this.carService
+                .ExistsByIdAsync(id);
+            if (!carExists)
+            {
+                this.TempData[ErrorMessage] = "Car with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Car");
+            }
+
+            bool isUserAgent = await this.agentService
+                .AgentExistsByUserIdAsync(this.User.GetId()!);
+            if (!isUserAgent)
+            {
+                this.TempData[ErrorMessage] = "You must become an agent in order to edit car info!";
+
+                return this.RedirectToAction("Become", "Agent");
+            }
+
+            try
+            {
+                await this.carService.EditCarByIdAndFormModel(id, formModel);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to update the car information!");
+                formModel.Categories = await this.categoryService.AllCategoriesAsync();
+
+                return this.View(formModel);
+            }
+
+            return this.RedirectToAction("Details", "Car", new { id });
+        }
+
+        private IActionResult GeneralError()
+        {
+            this.TempData[ErrorMessage] = "Unexpected error occurred!";
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

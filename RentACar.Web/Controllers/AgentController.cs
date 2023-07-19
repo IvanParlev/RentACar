@@ -7,6 +7,8 @@
     using RentACar.Web.Infastructure.Extensions;
     using RentACar.Web.ViewModels.Agent;
 
+    using static Common.NotificationMessagesConstants;
+
     [Authorize]
     public class AgentController : Controller
     {
@@ -24,6 +26,8 @@
             bool isAgent = await this.agentService.AgentExistsByUserIdAsync(userId);
             if (isAgent)
             {
+                this.TempData[ErrorMessage] = "You are already an agent!";
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -36,8 +40,10 @@
             string? userId = this.User.GetId();
             bool isAgent = await this.agentService.AgentExistsByUserIdAsync(userId);
             if (isAgent)
-            {
-                return RedirectToAction("Index", "Home");
+			{
+				this.TempData[ErrorMessage] = "You are already an agent!";
+
+				return RedirectToAction("Index", "Home");
             }
 
             if (!this.ModelState.IsValid)
@@ -53,11 +59,12 @@
             catch (Exception)
             {
 
-                throw new Exception("An unexpected error occured!");
+                this.TempData[ErrorMessage] =
+                     "Unexpected error occurred while registering you as an agent!";
                 return this.RedirectToAction("Index", "Home");
             }
 
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("All", "Car");
         }
 
     }
