@@ -12,37 +12,89 @@
     {
         private readonly ICategoryService categoryService;
         private readonly IAgentService agentService;
+        private readonly ICarService carService;
 
-        public CarController(ICategoryService categoryService, IAgentService agentService)
+        public CarController(ICategoryService categoryService, IAgentService agentService, ICarService carService)
         {
             this.categoryService = categoryService;
             this.agentService = agentService;
+            this.carService = carService;
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> All()
         {
-            return View();
+            return this.Ok();
         }
 
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            bool isAgent = 
+            bool isAgent =
                 await this.agentService.AgentExistsByUserIdAsync(this.User.GetId()!);
             if (!isAgent)
             {
-              
+                return this.RedirectToAction("Become", "Agent");
+            }
+            try
+            {
+                CarFormModel formModel = new CarFormModel()
+                {
+                    Categories = await this.categoryService.AllCategoriesAsync()
+                };
 
+                return View(formModel);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(CarFormModel formModel)
+        {
+            bool isAgent =
+                await this.agentService.AgentExistsByUserIdAsync(this.User.GetId()!);
+            if (!isAgent)
+            {
                 return this.RedirectToAction("Become", "Agent");
             }
 
-            CarFormModel formModel = new CarFormModel()
-            {
-                Categories = await this.categoryService.AllCategoriesAsync()
-            };
+            bool categoryExists =
+                await this.categoryService.ExistsByIdAsync(formModel.CategoryId);
 
-            return View(formModel);
+            if (!categoryExists)
+            {
+                this.ModelState.AddModelError(nameof(formModel.CategoryId), "Selected category does not exist!");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                formModel.Categories = await this.categoryService.AllCategoriesAsync();
+
+                return this.View(formModel);
+            }
+
+            try
+            {
+                string? agentId =
+                   await this.agentService.GetAgentIdByUserIdAsync(this.User.GetId()!);
+
+                await this.carService.CreateAsync(formModel, agentId!);
+            }
+            catch (Exception _)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add you new car!");
+                formModel.Categories = await this.categoryService.AllCategoriesAsync();
+                return this.View(formModel);
+            }
+
+            return this.RedirectToAction("All", "Car");
         }
     }
 }

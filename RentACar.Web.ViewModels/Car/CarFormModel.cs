@@ -35,14 +35,14 @@
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
         public string? Description { get; set; }
 
-        [Range(typeof(decimal), PricePerDayMinValue, PricePerDayMaxValue)]
-        [Display(Name = "Daily Price")]
-        public decimal PricePerDay { get; set; }
-
         [Required]
         [StringLength(ImageUrlMaxLength)]
         [Display(Name = "Image Link")]
         public string ImageUrl { get; set; } = null!;
+
+        [Range(typeof(decimal), PricePerDayMinValue, PricePerDayMaxValue)]
+        [Display(Name = "Daily Price")]
+        public decimal PricePerDay { get; set; }
 
         [Display(Name = "Category")]
         public int CategoryId { get; set; }

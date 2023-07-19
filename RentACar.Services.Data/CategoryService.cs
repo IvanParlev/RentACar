@@ -24,11 +24,20 @@
                 .Select(c => new CarSelectCategoryFormModel()
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
                 })
                 .ToArrayAsync();
 
             return allCategories;
+        }
+
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            bool result = await this.dbContext
+                .Categories
+                .AnyAsync(c => c.Id == id);
+
+            return result;
         }
     }
 }

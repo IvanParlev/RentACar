@@ -30,10 +30,23 @@ namespace RentACar.Services.Data
             {
                 Name = model.Name,
                 UserId = Guid.Parse(userId)
-			};
+            };
 
-			await this.dbContext.Agents.AddAsync(newAgent);
+            await this.dbContext.Agents.AddAsync(newAgent);
             await this.dbContext.SaveChangesAsync();
-		}
-	}
+        }
+
+        public async Task<string?> GetAgentIdByUserIdAsync(string userId)
+        {
+            Agent? agent = await this.dbContext
+                .Agents
+                .FirstOrDefaultAsync(a => a.UserId.ToString() == userId);
+            if (agent == null)
+            {
+                return null;
+            }
+
+            return agent.Id.ToString();
+        }
+    }
 }
