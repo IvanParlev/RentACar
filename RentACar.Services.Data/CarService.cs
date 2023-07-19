@@ -50,6 +50,7 @@
                 .ThenBy(c => c.Model)
             };
             IEnumerable<CarAllViewModel> allCars = await carsQuery
+               .Where(c => c.IsActive)
                .Skip((queryModel.CurrentPage - 1) * queryModel.CarsPerPage)
                .Take(queryModel.CarsPerPage)
                .Select(c => new CarAllViewModel()

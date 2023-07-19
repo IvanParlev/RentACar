@@ -46,7 +46,9 @@
         [MaxLength(ImageUrlMaxLength)]
         public string ImageUrl { get; set; } = null!;
 
-        public Guid AgentId { get; set; }
+		public bool IsActive { get; set; }
+
+		public Guid AgentId { get; set; }
 
         public virtual Agent Agent { get; set; } = null!;
 

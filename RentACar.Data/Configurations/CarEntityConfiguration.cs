@@ -9,6 +9,10 @@
         public void Configure(EntityTypeBuilder<Car> builder)
         {
             builder
+                .Property(c => c.IsActive)
+                .HasDefaultValue(true);
+
+            builder
                 .HasOne(c => c.Category)
                 .WithMany(c => c.Cars)
                 .HasForeignKey(c => c.CategoryId)
