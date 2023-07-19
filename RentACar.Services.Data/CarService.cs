@@ -1,9 +1,12 @@
 ﻿namespace RentACar.Services.Data
 {
+    using Microsoft.EntityFrameworkCore;
     using RentACar.Data.Models;
     using RentACar.Services.Data.Interfaces;
+    using RentACar.Services.Data.Models.Car;
     using RentACar.Web.Data;
     using RentACar.Web.ViewModels.Car;
+    using RentACar.Web.ViewModels.Car.Enums;
     using System;
     using System.Threading.Tasks;
 
@@ -14,6 +17,60 @@
         public CarService(RentACarDbContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public async Task<AllCarsFilteredAndPagedServiceModel> AllAsync(AllCarsQueryModel queryModel)
+        {
+            IQueryable<Car> carsQuery = this.dbContext
+                .Cars
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryModel.Category))
+            {
+                carsQuery = carsQuery
+                    .Where(c => c.Category.Name == queryModel.Category);
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchString))
+            {
+                string wildCard = $"%{queryModel.SearchString.ToLower()}%";
+                carsQuery = carsQuery
+                    .Where(c => EF.Functions.Like(c.Model, wildCard) ||
+                                EF.Functions.Like(c.Description, wildCard));
+            }
+
+            carsQuery = queryModel.CarSorting switch
+            {
+                CarSorting.PriceAscending => carsQuery
+                .OrderBy(c => c.PricePerDay),
+                CarSorting.PriceDescending => carsQuery
+                .OrderByDescending(c => c.PricePerDay),
+                _ => carsQuery
+                .OrderBy(c => c.RenterId != null)
+                .ThenBy(c => c.Model)
+            };
+            IEnumerable<CarAllViewModel> allCars = await carsQuery
+               .Skip((queryModel.CurrentPage - 1) * queryModel.CarsPerPage)
+               .Take(queryModel.CarsPerPage)
+               .Select(c => new CarAllViewModel()
+               {
+                   Id = c.Id,
+                   CarModel = c.Model,
+                   Year = c.Year,
+                   GearboxType = c.GearboxType,
+                   FuelType = c.FuelType,
+                   PricePerDay = c.PricePerDay,
+                   ImageUrl = c.ImageUrl,
+                   IsRented = c.RenterId.HasValue
+               })
+               .ToArrayAsync();
+            int totalCars = carsQuery.Count();
+
+            return new AllCarsFilteredAndPagedServiceModel()
+            {
+                TotalCarsCount = totalCars,
+                Cars = allCars
+            };
         }
 
         public async Task CreateAsync(CarFormModel formModel, string agentId)

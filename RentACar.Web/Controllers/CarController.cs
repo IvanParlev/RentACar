@@ -4,7 +4,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using RentACar.Services.Data.Interfaces;
-    using RentACar.Web.Infastructure.Extensions;
+	using RentACar.Services.Data.Models.Car;
+	using RentACar.Web.Infastructure.Extensions;
     using RentACar.Web.ViewModels.Car;
 
     [Authorize]
@@ -21,10 +22,18 @@
             this.carService = carService;
         }
 
+		[HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllCarsQueryModel queryModel)
         {
-            return this.Ok();
+            AllCarsFilteredAndPagedServiceModel serviceModel =
+                await this.carService.AllAsync(queryModel);
+
+            queryModel.Cars = serviceModel.Cars;
+            queryModel.TotalCars = serviceModel.TotalCarsCount;
+            queryModel.Categories = await this.categoryService.AllCategoryNamesAsync();
+
+            return this.View(queryModel);
         }
 
         [HttpGet]
