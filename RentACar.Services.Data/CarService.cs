@@ -74,7 +74,7 @@
             };
         }
 
-        public async Task CreateAsync(CarFormModel formModel, string agentId)
+        public async Task<int> CreateAndReturnIdAsync(CarFormModel formModel, string agentId)
         {
             Car newCar = new Car
             {
@@ -92,6 +92,8 @@
 
             await this.dbContext.Cars.AddAsync(newCar);
             await this.dbContext.SaveChangesAsync();
+
+            return newCar.Id;
 		}
 
 		public async Task EditCarByIdAndFormModel(int carId, CarFormModel formModel)

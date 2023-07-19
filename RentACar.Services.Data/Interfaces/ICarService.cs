@@ -5,7 +5,7 @@
 
     public interface ICarService
     {
-        Task CreateAsync(CarFormModel formModel, string agentId);
+        Task<int> CreateAndReturnIdAsync(CarFormModel formModel, string agentId);
 
         Task<AllCarsFilteredAndPagedServiceModel> AllAsync(AllCarsQueryModel queryModel);
 

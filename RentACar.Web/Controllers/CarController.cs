@@ -9,7 +9,7 @@
     using RentACar.Web.ViewModels.Car;
 
     using static Common.NotificationMessagesConstants;
-   
+
     [Authorize]
     public class CarController : Controller
     {
@@ -99,10 +99,12 @@
                 string? agentId =
                    await this.agentService.GetAgentIdByUserIdAsync(this.User.GetId()!);
 
-                await this.carService.CreateAsync(formModel, agentId!);
+                int carId =
+                     await this.carService.CreateAndReturnIdAsync(formModel, agentId!);
 
                 this.TempData[SuccessMessage] = "Car was added successfully!";
 
+                return this.RedirectToAction("Details", "Car", new { id = carId });
             }
             catch (Exception)
             {
@@ -110,8 +112,6 @@
                 formModel.Categories = await this.categoryService.AllCategoriesAsync();
                 return this.View(formModel);
             }
-
-            return this.RedirectToAction("All", "Car");
         }
 
         [HttpGet]
