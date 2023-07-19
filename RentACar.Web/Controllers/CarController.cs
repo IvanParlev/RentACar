@@ -4,8 +4,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using RentACar.Services.Data.Interfaces;
-	using RentACar.Services.Data.Models.Car;
-	using RentACar.Web.Infastructure.Extensions;
+    using RentACar.Services.Data.Models.Car;
+    using RentACar.Web.Infastructure.Extensions;
     using RentACar.Web.ViewModels.Car;
 
     [Authorize]
@@ -22,9 +22,9 @@
             this.carService = carService;
         }
 
-		[HttpGet]
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All([FromQuery]AllCarsQueryModel queryModel)
+        public async Task<IActionResult> All([FromQuery] AllCarsQueryModel queryModel)
         {
             AllCarsFilteredAndPagedServiceModel serviceModel =
                 await this.carService.AllAsync(queryModel);
@@ -104,6 +104,21 @@
             }
 
             return this.RedirectToAction("All", "Car");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int id)
+        {
+            CarDetailsViewModel? viewModel = await this.carService
+                .GetDetailsByIdAsync(id);
+            if (viewModel == null)
+            {
+                //TODO: Error pages 
+
+                return this.RedirectToAction("All", "Car");
+            }
+            return View(viewModel);
         }
     }
 }

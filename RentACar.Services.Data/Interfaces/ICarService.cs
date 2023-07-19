@@ -9,5 +9,7 @@
 
         Task<AllCarsFilteredAndPagedServiceModel> AllAsync(AllCarsQueryModel queryModel);
 
+        Task<CarDetailsViewModel?> GetDetailsByIdAsync(int carId);
+
     }
 }

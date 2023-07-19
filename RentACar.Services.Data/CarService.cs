@@ -93,5 +93,34 @@
             await this.dbContext.Cars.AddAsync(newCar);
             await this.dbContext.SaveChangesAsync();
         }
+
+        public async Task<CarDetailsViewModel?> GetDetailsByIdAsync(int carId)
+        {
+            Car? car = await this.dbContext
+                .Cars
+                .Include(c => c.Category)
+                .Where(c => c.IsActive)
+                .FirstOrDefaultAsync(c => c.Id == carId);
+
+            if (car == null)
+            {
+                return null;
+            }
+
+            return new CarDetailsViewModel
+            {
+                Id = car.Id,
+                CarModel = car.Model,
+                Year = car.Year,
+                Category = car.Category.Name,
+                ImageUrl = car.ImageUrl,
+                PricePerDay = car.PricePerDay,
+                GearboxType = car.GearboxType,
+                FuelType = car.FuelType,
+                Description = car.Description,
+                NumberOfSeats = car.NumberOfSeats,
+                IsRented = car.RenterId.HasValue
+            };
+        }
     }
 }

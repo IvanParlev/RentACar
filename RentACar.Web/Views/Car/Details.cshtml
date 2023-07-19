@@ -1,0 +1,55 @@
+﻿@model CarDetailsViewModel
+@{
+	ViewBag.Title = "Car Details";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="container" style="display:inline">
+	<div class="row">
+		<div class="col-4">
+			<img class="card-img-top" style="width: 25rem;"
+				 src="@Model.ImageUrl" alt="House Image">
+		</div>
+		<div class="card col-8 border-0">
+			<p style="font-size:25px;"><u>@Model.CarModel</u></p>
+			<p>Manufactured in: <b>@Model.Year</b></p>
+			<p>Coupe Type: <b>@Model.Category</b></p>
+			<p>Gearbox: <b>@Model.GearboxType</b></p>
+			<p>Fuel Type: <b>@Model.FuelType</b></p>
+			<p>Seats: <b>@Model.NumberOfSeats</b></p>
+			<p>
+				Price Per Day:
+				<b>@String.Format("{0:f2}", Model.PricePerDay) BGN</b>
+			</p>
+			<p>@Model.Description</p>
+			<p><i>(@(Model.IsRented ? "Not Available" : "Available"))</i></p>
+			<div class="form-inline">
+				@if (this.User.Identity?.IsAuthenticated ?? false)
+				{
+					<a class="btn btn-warning" asp-controller="Car" aspaction="Edit"
+				   asp-route-id="@Model.Id">Edit</a>
+					<a class="ml-2 btn btn-danger" asp-controller="Car" aspaction="Delete"
+				   asp-route-id="@Model.Id">Delete</a>
+					@if (!Model.IsRented)
+					{
+						<form class="ml-2" asp-controller="Car"
+					  asp-action="Rent" asp-route-id="@Model.Id"
+					  method="post">
+							<input class="btn btn-primary" type="submit"
+						   value="Rent" />
+						</form>
+					}
+					else
+					{
+						<form class="ml-2" asp-controller="Car" asp-action="Leave"
+					  asp-route-id="@Model.Id" method="post">
+							<input class="btn btn-primary" type="submit"
+						   value="Return" />
+						</form>
+					}
+				}
+			</div>
+			<p></p>
+		</div>
+	</div>
+</div>
