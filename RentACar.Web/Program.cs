@@ -5,8 +5,9 @@ namespace RentACar.Web
 
     using Data;
     using RentACar.Data.Models;
-	using RentACar.Web.Infastructure.Extensions;
-	using RentACar.Services.Data.Interfaces;
+    using RentACar.Web.Infastructure.Extensions;
+    using RentACar.Services.Data.Interfaces;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Program
     {
@@ -37,8 +38,14 @@ namespace RentACar.Web
                 .AddEntityFrameworkStores<RentACarDbContext>();
 
             builder.Services.AddApplicationServices(typeof(ILocationService));
-          
-            builder.Services.AddControllersWithViews();
+
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    // Preventing CSRF attacks
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                });
 
             WebApplication app = builder.Build();
 

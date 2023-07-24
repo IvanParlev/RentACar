@@ -1,4 +1,11 @@
 ﻿@using static RentACar.Common.ApplicationConstants;
+@using RentACar.Services.Data.Interfaces
+@using RentACar.Web.Infastructure.Extensions
+
+@inject IAgentService AgentService
+@{
+	bool isUserAgent = await AgentService.AgentExistsByUserIdAsync(this.User.GetId());
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,12 +16,12 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/RentACar.Web.styles.css" asp-append-version="true" />
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>	
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<partial name="_NotificationsPartial"/>
+	<partial name="_NotificationsPartial" />
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 			<div class="container-fluid">
@@ -36,9 +43,12 @@
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Add">Add Car</a>
-							</li>
+							@if (isUserAgent)
+							{
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Add">Add Car</a>
+								</li>
+							}
 						}
 					</ul>
 					<partial name="_LoginPartial" />

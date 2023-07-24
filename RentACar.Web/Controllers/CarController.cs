@@ -197,7 +197,7 @@
 
             try
             {
-                await this.carService.EditCarByIdAndFormModel(id, formModel);
+                await this.carService.EditCarByIdAndFormModelAsync(id, formModel);
             }
             catch (Exception)
             {
@@ -207,7 +207,78 @@
                 return this.View(formModel);
             }
 
+            this.TempData[SuccessMessage] = "Car information was updated successfully!";
             return this.RedirectToAction("Details", "Car", new { id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool carExists = await this.carService
+                .ExistsByIdAsync(id);
+            if (!carExists)
+            {
+                this.TempData[ErrorMessage] = "Car with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Car");
+            }
+
+            bool isUserAgent = await this.agentService
+                .AgentExistsByUserIdAsync(this.User.GetId()!);
+            if (!isUserAgent)
+            {
+                this.TempData[ErrorMessage] = "You must become an agent in order to edit car info!";
+
+                return this.RedirectToAction("Become", "Agent");
+            }
+
+            try
+            {
+                CarDeleteDetailsViewModel viewModel =
+                    await this.carService.GetCarForDeleteByIdAsync(id);
+
+                return this.View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, CarDeleteDetailsViewModel model)
+        {
+            bool carExists = await this.carService
+                .ExistsByIdAsync(id);
+            if (!carExists)
+            {
+                this.TempData[ErrorMessage] = "Car with the provided id does not exist!";
+
+                return this.RedirectToAction("All", "Car");
+            }
+
+            bool isUserAgent = await this.agentService
+                .AgentExistsByUserIdAsync(this.User.GetId()!);
+            if (!isUserAgent)
+            {
+                this.TempData[ErrorMessage] = "You must become an agent in order to edit car info!";
+
+                return this.RedirectToAction("Become", "Agent");
+            }
+
+            try
+            {
+                await this.carService.DeleteCarByIdAsync(id);
+
+                this.TempData[WarningMessage] = "Car was successfully deleted!";
+
+                return this.RedirectToAction("All", "Car");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
         }
 
         private IActionResult GeneralError()

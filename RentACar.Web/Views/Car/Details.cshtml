@@ -1,7 +1,15 @@
-﻿@model CarDetailsViewModel
+﻿@using RentACar.Services.Data.Interfaces
+@using RentACar.Web.Infastructure.Extensions
+@model CarDetailsViewModel
 @{
 	ViewBag.Title = "Car Details";
 }
+
+@inject IAgentService AgentService
+@{
+	bool isUserAgent = await AgentService.AgentExistsByUserIdAsync(this.User.GetId());
+}
+
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 <div class="container" style="display:inline">
@@ -26,10 +34,13 @@
 			<div class="form-inline">
 				@if (this.User.Identity?.IsAuthenticated ?? false)
 				{
-					<a class="btn btn-warning" asp-controller="Car" aspaction="Edit"
+					@if (isUserAgent)
+					{
+						<a class="btn btn-warning" asp-controller="Car" asp-action="Edit"
 				   asp-route-id="@Model.Id">Edit</a>
-					<a class="ml-2 btn btn-danger" asp-controller="Car" aspaction="Delete"
+						<a class="ml-2 btn btn-danger" asp-controller="Car" asp-action="Delete"
 				   asp-route-id="@Model.Id">Delete</a>
+					}
 					@if (!Model.IsRented)
 					{
 						<form class="ml-2" asp-controller="Car"

@@ -96,7 +96,19 @@
             return newCar.Id;
 		}
 
-		public async Task EditCarByIdAndFormModel(int carId, CarFormModel formModel)
+        public async Task DeleteCarByIdAsync(int carId)
+        {
+            Car carToDelete = await this.dbContext
+                .Cars
+                .Where(c => c.IsActive)
+                .FirstAsync(c => c.Id == carId);
+
+            carToDelete.IsActive = false;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task EditCarByIdAndFormModelAsync(int carId, CarFormModel formModel)
 		{
 			Car car = await this.dbContext
 				.Cars
@@ -124,6 +136,20 @@
                .AnyAsync(c => c.Id == carId);
 
             return result;
+        }
+
+        public async Task<CarDeleteDetailsViewModel> GetCarForDeleteByIdAsync(int carId)
+        {
+            Car car = await this.dbContext
+                .Cars
+                .Where(c => c.IsActive)
+                .FirstAsync(c => c.Id == carId);
+
+            return new CarDeleteDetailsViewModel
+            {
+                CarModel = car.Model,
+                ImageUrl = car.ImageUrl
+            };
         }
 
         public async Task<CarFormModel> GetCarForEditByIdAsync(int carId)
