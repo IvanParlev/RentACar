@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace RentACar.Data.Migrations
 {
     [DbContext(typeof(RentACarDbContext))]
-    [Migration("20230715143509_AddReviews")]
-    partial class AddReviews
+    [Migration("20230727212724_AddingIsFinalizedToOrderTable")]
+    partial class AddingIsFinalizedToOrderTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -274,6 +274,11 @@ namespace RentACar.Data.Migrations
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
 
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -311,6 +316,7 @@ namespace RentACar.Data.Migrations
                             FuelType = 3,
                             GearboxType = 2,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/8/8a/2020_Volkswagen_Golf_Style_1.5_Front.jpg",
+                            IsActive = false,
                             Model = "VW Golf 8",
                             NumberOfSeats = 5,
                             PricePerDay = 90m,
@@ -325,6 +331,7 @@ namespace RentACar.Data.Migrations
                             FuelType = 1,
                             GearboxType = 1,
                             ImageUrl = "https://di-uploads-pod28.dealerinspire.com/colonialtoyota/uploads/2020/09/2021-Toyota-Corolla-Indiana-PA-White-Left-1.jpg",
+                            IsActive = false,
                             Model = "Toyota Corolla",
                             NumberOfSeats = 5,
                             PricePerDay = 100m,
@@ -339,6 +346,7 @@ namespace RentACar.Data.Migrations
                             FuelType = 2,
                             GearboxType = 2,
                             ImageUrl = "https://resource.digitaldealer.com.au/image/15009168736417dea75b995464285423_900_600-c.jpg",
+                            IsActive = false,
                             Model = "VW Passat",
                             NumberOfSeats = 5,
                             PricePerDay = 110m,
@@ -353,6 +361,7 @@ namespace RentACar.Data.Migrations
                             FuelType = 1,
                             GearboxType = 2,
                             ImageUrl = "https://media.ed.edmunds-media.com/hyundai/tucson/2022/oem/2022_hyundai_tucson_4dr-suv_limited_fq_oem_1_1280.jpg",
+                            IsActive = false,
                             Model = "Hyundai Tucson",
                             NumberOfSeats = 5,
                             PricePerDay = 120m,
@@ -482,6 +491,9 @@ namespace RentACar.Data.Migrations
                     b.Property<int>("DaysRented")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsFinalized")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PickUpLocationId")
                         .HasColumnType("int");
 
@@ -520,8 +532,8 @@ namespace RentACar.Data.Migrations
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");

@@ -1,0 +1,30 @@
+﻿@using RentACar.Services.Data.Interfaces
+@using RentACar.Web.Infastructure.Extensions
+@model OrderFormModel
+
+@{
+	ViewBag.Title = "Car Details";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="container" style="display:inline">
+	<div class="row">
+		<div class="col-4">
+			<img class="card-img-top" style="width: 25rem;"
+				 src="" alt="House Image">
+		</div>
+		<div class="card col-8 border-0">
+			<p style="font-size:25px;"><u></u></p>
+			<p>Manufactured in: <b>@Model.DaysRented</b></p>
+			<p>Coupe Type: <b>@Model.PickUpLocationId</b></p>
+			<p>Gearbox: <b>@Model.ReturnLocationId</b></p>d
+			<p>
+				Price for the time span:
+				<b>@String.Format("{0:f2}", Model.Price) BGN</b>
+			</p>
+		</div>
+		<p></p>
+	</div>
+</div>
+

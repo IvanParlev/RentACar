@@ -4,33 +4,40 @@
 	ViewData["Title"] = "Home";
 	var address = Model.ToList();
 }
+<!doctype html>
+<html lang="en">
 <body>
-	<div style="text-align:center" id="myTop">
-		<h1>
-			Rent a Car - Find and book your car!
-		</h1>
+	<div>
+		<main>
+			<h1>Rent a Car - Find and book your car!</h1>
+			<p class="fs-5 col-md-8">Rent A Car is the leading national car rental company in Bulgaria. We operate with the largest fleet in the country, most	 of which are brand new or up to 3 years old.</p>
+			<hr />
+			<div class="row g-5">
+				<div class="col-md-6">
+					<h2 style="font-size:40px;">Locations</h2>
+					<p style="font-size:20px;">Rent a Car has offices in all major airports and cities of Bulgaria.</p>
+					
+					<ul class="list-group" style="font-size:22px;" >
+						@for (int i = 0; i < address.Count(); i++)
+						{
+							var location = address[i];
+							<li>@location.Id. @location.Address</li>
+						}
+					</ul>
+				</div>
+
+				<div class="col-md-6">
+					<h2 style="font-size:40px;">Reviews</h2>
+					<p style="font-size:20px;">Here are some of our reviews.</p>
+					<ul class="list-group">
+						<li></li>
+					</ul>
+				</div>
+			</div>
+		</main>
 	</div>
-	<hr></hr>
-	<h2 style="text-align:right">
-		Our Locations
-	</h2>
-	<p style="text-align:right">
-		Rent a Car has offices in all major airports and cities of Bulgaria.
-	</p>
-	@for (int i = 0; i < address.Count(); i++)
-	{
-		var location = address[i];
-		<div style="text-align:right">
-			<p>
-				@location.Id. @location.Address
-			</p>
-		</div>
-	}
-	<h3 style="text-align:left">
-		Our Reviews
-	</h3>
-	<p style="text-align:left">
-		Here are some of our customers reviews:
-	</p>
+	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+</html>
+
 

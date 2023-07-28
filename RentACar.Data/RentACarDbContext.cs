@@ -1,4 +1,4 @@
-﻿namespace RentACar.Web.Data
+﻿namespace RentACar.Data
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -30,8 +30,8 @@
         {
             Assembly configAssembly = Assembly.GetAssembly(typeof(RentACarDbContext)) ?? Assembly.GetExecutingAssembly();
             builder.ApplyConfigurationsFromAssembly(configAssembly);
-            
-            base.OnModelCreating(builder);  
+
+            base.OnModelCreating(builder);
         }
     }
 }

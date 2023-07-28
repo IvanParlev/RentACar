@@ -1,0 +1,17 @@
+﻿@model OrderFormModel
+
+@{
+	ViewData["Title"] = "Craete Order";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<partial name="_OrderFormPartial" model="@Model" />
+
+@section Scripts
+	{
+	<partial name="_ValidationScriptsPartial" />
+}
+
+

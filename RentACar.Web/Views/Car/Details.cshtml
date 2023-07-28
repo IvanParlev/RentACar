@@ -15,7 +15,7 @@
 <div class="container" style="display:inline">
 	<div class="row">
 		<div class="col-4">
-			<img class="card-img-top" style="width: 25rem;"
+			<img class="card-img-top" style="width: 26rem;" 
 				 src="@Model.ImageUrl" alt="House Image">
 		</div>
 		<div class="card col-8 border-0">
@@ -30,7 +30,7 @@
 				<b>@String.Format("{0:f2}", Model.PricePerDay) BGN</b>
 			</p>
 			<p>@Model.Description</p>
-			<p><i>(@(Model.IsRented ? "Not Available" : "Available"))</i></p>
+			<p><i>(@(Model.IsRented ? "Sold Out" : "Available"))</i></p>
 			<div class="form-inline">
 				@if (this.User.Identity?.IsAuthenticated ?? false)
 				{
@@ -43,19 +43,11 @@
 					}
 					@if (!Model.IsRented)
 					{
-						<form class="ml-2" asp-controller="Car"
-					  asp-action="Rent" asp-route-id="@Model.Id"
+						<form class="ml-2" asp-controller="Order"
+					  asp-action="Create" asp-route-id="@Model.Id"
 					  method="post">
 							<input class="btn btn-primary" type="submit"
 						   value="Rent" />
-						</form>
-					}
-					else
-					{
-						<form class="ml-2" asp-controller="Car" asp-action="Leave"
-					  asp-route-id="@Model.Id" method="post">
-							<input class="btn btn-primary" type="submit"
-						   value="Return" />
 						</form>
 					}
 				}

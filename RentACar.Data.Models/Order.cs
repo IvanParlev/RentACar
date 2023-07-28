@@ -29,6 +29,8 @@
         [Required]
         public int DaysRented { get; set; }
 
+        public bool IsFinalized { get; set; }
+
         [Required]
         public int PickUpLocationId { get; set; }
 

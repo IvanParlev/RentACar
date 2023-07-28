@@ -1,8 +1,8 @@
 ﻿namespace RentACar.Services.Data
 {
     using Microsoft.EntityFrameworkCore;
+    using RentACar.Data;
     using RentACar.Services.Data.Interfaces;
-    using RentACar.Web.Data;
     using RentACar.Web.ViewModels.Category;
     using System.Collections.Generic;
     using System.Threading.Tasks;

@@ -20,5 +20,9 @@
         Task<CarDeleteDetailsViewModel> GetCarForDeleteByIdAsync(int carId);
 
         Task DeleteCarByIdAsync(int carId);
+
+        Task<bool> IsRentedAsync(int carId);
+
+        Task RentCarAsync(string orderId);
     }
 }

@@ -57,6 +57,8 @@ namespace RentACar.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
+
                 app.UseHsts();
             }
 

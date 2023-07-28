@@ -17,7 +17,7 @@
 				Price Per Day:
 				<b>@String.Format("{0:f2}", Model.PricePerDay) BGN</b>
 			</h6>
-			<h6>(@(Model.IsRented ? "Not Available" : "Available"))</h6>
+			<h6>(@(Model.IsRented ? "Sold Out" : "Available"))</h6>
 			<br />
 			<a asp-controller="Car" asp-action="Details" asp-route-id="@Model.Id"
 			   class="btn btn-success">Details</a>
@@ -33,16 +33,9 @@
 				<p></p>
 				@if (!Model.IsRented)
 				{
-					<form class="input-group-sm" asp-controller="Car"
-				  asp-action="Rent" asp-route-id="@Model.Id" method="post">
-						<input class="btn btn-primary" type="submit" value="Rent" />
-					</form>
-				}
-				else
-				{
-					<form asp-controller="Car" asp-action="Leave"
-				  asp-route-id="@Model.Id" method="post">
-						<input class="btn btn-primary" type="submit" value="Leave" />
+					<form class="input-group-sm" asp-controller="Order"
+				  asp-action="Create" asp-route-id="@Model.Id" method="get">
+						<input class="btn btn-primary" type="submit" value="Book Now" />
 					</form>
 				}
 			}

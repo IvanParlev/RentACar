@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RentACar.Data;
 using RentACar.Data.Models;
 using RentACar.Services.Data.Interfaces;
-using RentACar.Web.Data;
 using RentACar.Web.ViewModels.Agent;
 
 namespace RentACar.Services.Data
@@ -24,7 +24,7 @@ namespace RentACar.Services.Data
             return result;
         }
 
-        public async Task Create(string userId, BecomeAgentFormModel model)
+        public async Task CreateAsync(string userId, BecomeAgentFormModel model)
         {
             Agent newAgent = new Agent()
             {

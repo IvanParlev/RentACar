@@ -1,0 +1,72 @@
+﻿@using RentACar.Services.Data.Interfaces
+@using RentACar.Web.Infastructure.Extensions
+@using RentACar.Web.ViewModels.Location
+@model OrderDetailsViewModel
+@{
+	ViewBag.Title = "Order Details";
+}
+
+@inject ICarService CarService
+@{
+	CarDetailsViewModel viewModel = await this.CarService
+				.GetDetailsByIdAsync(Model.CarId);
+}
+
+@inject ILocationService LocationService
+@{
+	OrderSelectLocationFormModel PickUplocationModel = await this.LocationService
+						.GetAddressById(Model.PickUpLocationId);
+
+	OrderSelectLocationFormModel ReturnlocationModel = await this.LocationService
+	.GetAddressById(Model.ReturnLocationId);
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="container" style="display:inline">
+	<div class="row">
+		<div class="col-4">
+			<img class="card-img-top" style="width: 26rem;"
+				 src="@viewModel.ImageUrl" alt="House Image">
+		</div>
+		<div class="card col-3 border-2">
+			<p style="font-size:30px;"><u>Your Order</u></p>
+			<p style="font-size:20px;">Rental Period: <b>@Model.DaysRented Days</b></p>
+			<p style="font-size:20px;">Pick Up: <b>@PickUplocationModel.Address</b></p>
+			<p style="font-size:20px;">Drop Off: <b>@ReturnlocationModel.Address</b></p>
+			<p style="font-size:20px;">Rental Cost: <b>@Model.Price BGN</b></p>
+
+			@if (this.User.Identity?.IsAuthenticated ?? false)
+			{
+				@if (!viewModel.IsRented)
+				{
+					<div style="margin-right:50px">
+						<form class="ml-2" asp-controller="Car"
+					  asp-action="Rent" asp-route-id="@Model.Id"
+					  method="post">
+							<input class="btn btn-primary" type="submit"
+						   value="Confrim" />
+						</form>
+
+					</div>
+				}
+			}
+		</div>
+		<div class="card col-3 border-2">
+			<p style="font-size:25px;"><u>@viewModel.CarModel</u></p>
+			<p>Manufactured in: <b>@viewModel.Year</b></p>
+			<p>Coupe Type: <b>@viewModel.Category</b></p>
+			<p>Gearbox: <b>@viewModel.GearboxType</b></p>
+			<p>Fuel Type: <b>@viewModel.FuelType</b></p>
+			<p>Seats: <b>@viewModel.NumberOfSeats</b></p>
+			<p>
+				Price Per Day:
+				<b>@String.Format("{0:f2}", viewModel.PricePerDay) BGN</b>
+			</p>
+			<p>Description: @viewModel.Description</p>
+			<div class="form-inline">
+			</div>
+			<p></p>
+		</div>
+	</div>
+</div>

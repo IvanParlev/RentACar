@@ -16,12 +16,14 @@
         private readonly ICategoryService categoryService;
         private readonly IAgentService agentService;
         private readonly ICarService carService;
+        private readonly IOrderService orderService;
 
-        public CarController(ICategoryService categoryService, IAgentService agentService, ICarService carService)
+        public CarController(ICategoryService categoryService, IAgentService agentService, ICarService carService, IOrderService orderService)
         {
             this.categoryService = categoryService;
             this.agentService = agentService;
             this.carService = carService;
+            this.orderService = orderService;
         }
 
         [HttpGet]
@@ -279,6 +281,29 @@
                 return this.GeneralError();
             }
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Rent(string id)
+        {
+            bool orderExists = await this.orderService.ExistsByIdAsync(id);
+            if (!orderExists)
+            {
+                this.TempData[ErrorMessage] = "Order with the provided id does not exist!";
+
+                return this.RedirectToAction("Mine", "Order");
+            }
+
+            try
+            {
+                await this.carService.RentCarAsync(id);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+                
+            }
+            return this.RedirectToAction("Mine", "Order");
         }
 
         private IActionResult GeneralError()

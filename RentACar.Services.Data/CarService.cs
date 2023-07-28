@@ -6,9 +6,9 @@
     using RentACar.Data.Models;
     using RentACar.Services.Data.Interfaces;
     using RentACar.Services.Data.Models.Car;
-    using RentACar.Web.Data;
     using RentACar.Web.ViewModels.Car;
     using RentACar.Web.ViewModels.Car.Enums;
+    using RentACar.Data;
 
     public class CarService : ICarService
     {
@@ -58,8 +58,6 @@
                    Id = c.Id,
                    CarModel = c.Model,
                    Year = c.Year,
-                   GearboxType = c.GearboxType,
-                   FuelType = c.FuelType,
                    PricePerDay = c.PricePerDay,
                    ImageUrl = c.ImageUrl,
                    IsRented = c.RenterId.HasValue
@@ -94,7 +92,7 @@
             await this.dbContext.SaveChangesAsync();
 
             return newCar.Id;
-		}
+        }
 
         public async Task DeleteCarByIdAsync(int carId)
         {
@@ -109,26 +107,26 @@
         }
 
         public async Task EditCarByIdAndFormModelAsync(int carId, CarFormModel formModel)
-		{
-			Car car = await this.dbContext
-				.Cars
-				.Where(c => c.IsActive)
-				.FirstAsync(c => c.Id == carId);
+        {
+            Car car = await this.dbContext
+                .Cars
+                .Where(c => c.IsActive)
+                .FirstAsync(c => c.Id == carId);
 
-			car.Model = formModel.Model;
-			car.Year = formModel.Year;
-			car.NumberOfSeats = formModel.NumberOfSeats;
-			car.GearboxType = formModel.GearboxType;
-			car.FuelType = formModel.FuelType;
-			car.Description = formModel.Description;
-			car.ImageUrl = formModel.ImageUrl;
-			car.PricePerDay = formModel.PricePerDay;
-			car.CategoryId = formModel.CategoryId;
+            car.Model = formModel.Model;
+            car.Year = formModel.Year;
+            car.NumberOfSeats = formModel.NumberOfSeats;
+            car.GearboxType = formModel.GearboxType;
+            car.FuelType = formModel.FuelType;
+            car.Description = formModel.Description;
+            car.ImageUrl = formModel.ImageUrl;
+            car.PricePerDay = formModel.PricePerDay;
+            car.CategoryId = formModel.CategoryId;
 
             await this.dbContext.SaveChangesAsync();
-		}
+        }
 
-		public async Task<bool> ExistsByIdAsync(int carId)
+        public async Task<bool> ExistsByIdAsync(int carId)
         {
             bool result = await this.dbContext
                .Cars
@@ -196,6 +194,30 @@
                 NumberOfSeats = car.NumberOfSeats,
                 IsRented = car.RenterId.HasValue
             };
+        }
+
+        public async Task<bool> IsRentedAsync(int carId)
+        {
+            Car car = await this.dbContext
+                .Cars
+                .FirstAsync(c => c.Id == carId);
+
+            return car.RenterId.HasValue;
+        }
+
+        public async Task RentCarAsync(string orderId)
+        {
+            Order order = await this.dbContext
+                .Orders
+                .FirstAsync(o => o.Id.ToString() == orderId);
+
+            Car car = await this.dbContext
+                .Cars
+                .Where(c => c.IsActive)
+                .FirstAsync(c => c.Id == order.CarId);
+            car.RenterId = Guid.Parse(order.RenterId.ToString());
+
+            await this.dbContext.SaveChangesAsync();
         }
     }
 }

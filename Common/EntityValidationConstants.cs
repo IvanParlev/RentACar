@@ -42,6 +42,7 @@
         public static class Order
         {
             public const int DaysRentedMinValue = 1;
+            public const int DaysRentedMaxValue = 60;
         }
 
         public static class Review

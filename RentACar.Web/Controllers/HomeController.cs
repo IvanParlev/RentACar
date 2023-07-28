@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using RentACar.Services.Data.Interfaces;
     using RentACar.Web.ViewModels.Home;
+    using RentACar.Web.ViewModels.Location;
 
     public class HomeController : Controller
     {

@@ -1,0 +1,22 @@
+﻿@model List<OrderDetailsViewModel>
+@{
+	ViewData["Title"] = "My Orders";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if (!Model.Any())
+{
+	<h2 class="text-center">You do not have any orders yet!</h2>
+}
+else
+{
+	<div class="row">
+		@foreach (OrderDetailsViewModel order in Model)
+		{
+			<partial name="_OrderPartial" model="order" />
+		}
+	</div>
+}
+

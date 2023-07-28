@@ -1,0 +1,38 @@
+﻿@model OrderDetailsViewModel
+@using RentACar.Services.Data.Interfaces
+@using RentACar.Web.Infastructure.Extensions
+
+@inject ICarService CarService
+@{
+	CarDetailsViewModel viewModel = await this.CarService
+				.GetDetailsByIdAsync(Model.CarId);
+}
+
+<div class="col-md-5">
+	<div class="card mb-3">
+		<img class="card-img-top" src="@viewModel.ImageUrl" alt="House Image">
+		<div class="card-body text-center">
+			<h4>@viewModel.CarModel</h4>
+			<h6>Manufactured in: <b>@viewModel.Year</b></h6>
+			<h6>Coupe Type: <b>@viewModel.Category</b></h6>
+			<h6>
+				Price of your order:
+				<b>@String.Format("{0:f2}", Model.Price) BGN</b>
+			</h6>
+			<h6 style="">(@(viewModel.IsRented ? "Rented" : "Waiting for final confirmation"))</h6>
+			<br />
+			@if (!viewModel.IsRented)
+			{
+				<form class="ml-2" asp-controller="Car"
+				  asp-action="Rent" asp-route-id="@Model.Id"
+				  method="post">
+					<input class="btn btn-primary" style="" type="submit"
+					   value="Confrim" />
+				</form>
+				<br />
+			}
+			<a asp-controller="Order" asp-action="Details" asp-route-id="@Model.Id"
+			   class="btn btn-success">Details of your order</a>
+		</div>
+	</div>
+</div>
