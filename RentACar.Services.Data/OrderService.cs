@@ -19,25 +19,7 @@
         }
 
         public async Task<IEnumerable<OrderDetailsViewModel>> AllByUserIdAsync(string userId)
-        {
-            //IEnumerable<CarAllViewModel> allUsersCars = await this.dbContext
-            //     .Cars
-            //     .Where(c => c.IsActive &&
-            //                 c.RenterId.HasValue &&
-            //                 c.RenterId.ToString() == userId)
-            //     .Select(c => new CarAllViewModel()
-            //     {
-            //         Id = c.Id,
-            //         CarModel = c.Model,
-            //         Year = c.Year,
-            //         PricePerDay = c.PricePerDay,
-            //         ImageUrl = c.ImageUrl,
-            //         IsRented = c.RenterId.HasValue
-            //     })
-            //     .ToArrayAsync();
-
-            //return allUsersCars;
-
+        {          
             IEnumerable<OrderDetailsViewModel> allUsersOrders = await this.dbContext
                  .Orders
                  .Where(o => o.IsFinalized &&

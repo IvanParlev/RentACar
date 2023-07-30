@@ -21,7 +21,7 @@
             public const int MinSeatsValue = 2;
             public const int MaxSeatsValue = 7;
 
-            public const string PricePerDayMinValue = "0";
+            public const string PricePerDayMinValue = "70";
             public const string PricePerDayMaxValue = "300";
 
             public const int ImageUrlMaxLength = 2048;
@@ -47,7 +47,10 @@
 
         public static class Review
         {
-            public const int CommentMinLength = 10;
+            public const int ReviewMinRatingValue = 1;
+            public const int ReviewMaxRatingValue = 5;
+
+            public const int CommentMinLength = 5;
             public const int CommentMaxLength = 500;
         }
     }

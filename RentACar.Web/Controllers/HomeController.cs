@@ -4,24 +4,30 @@
 
     using Microsoft.AspNetCore.Mvc;
     using RentACar.Services.Data.Interfaces;
+    using RentACar.Web.ViewModels.Car;
     using RentACar.Web.ViewModels.Home;
     using RentACar.Web.ViewModels.Location;
+    using RentACar.Web.ViewModels.Review;
 
     public class HomeController : Controller
     {
         private readonly ILocationService locationService;
+        private readonly ICarService carService;
+        private readonly IReviewService reviewService;
 
-        public HomeController(ILocationService locationService)
+        public HomeController(ILocationService locationService, ICarService carService, IReviewService reviewService)
         {
             this.locationService = locationService;
+            this.carService = carService;
+            this.reviewService = reviewService;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<IndexViewModel> viewModel =
-                await this.locationService.AllAddressesAsync();
+            IEnumerable<ReviewDetailsViewModel> reviewModel = 
+                await this.reviewService.GetAllReviewsAsync();
 
-            return View(viewModel);
+            return View(reviewModel);
         }
 
 

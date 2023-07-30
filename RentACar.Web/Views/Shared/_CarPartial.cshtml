@@ -31,6 +31,9 @@
 			   class="btn btn-danger">Delete</a>
 				}
 				<p></p>
+				<a asp-controller="Review" asp-action="Create" asp-route-id="@Model.Id"
+			   class="btn btn-secondary">Leave your Review</a>
+			   	<p></p>
 				@if (!Model.IsRented)
 				{
 					<form class="input-group-sm" asp-controller="Order"

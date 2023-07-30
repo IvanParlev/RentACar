@@ -1,8 +1,15 @@
 ﻿@using RentACar.Services.Data.Interfaces
 @using RentACar.Web.Infastructure.Extensions
 @model CarDetailsViewModel
+@inject IReviewService ReviewService
+@{
+	IEnumerable<ReviewDetailsViewModel> reviewDetails =
+	await this.ReviewService.GetReviewsByCarIdAsync(Model.Id);
+}
+
 @{
 	ViewBag.Title = "Car Details";
+	var review = reviewDetails.ToList();
 }
 
 @inject IAgentService AgentService
@@ -10,15 +17,16 @@
 	bool isUserAgent = await AgentService.AgentExistsByUserIdAsync(this.User.GetId());
 }
 
+
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 <div class="container" style="display:inline">
 	<div class="row">
 		<div class="col-4">
-			<img class="card-img-top" style="width: 26rem;" 
+			<img class="card-img-top" style="width: 26rem;"
 				 src="@Model.ImageUrl" alt="House Image">
 		</div>
-		<div class="card col-8 border-0">
+		<div class="card col-4 border-2">
 			<p style="font-size:25px;"><u>@Model.CarModel</u></p>
 			<p>Manufactured in: <b>@Model.Year</b></p>
 			<p>Coupe Type: <b>@Model.Category</b></p>
@@ -41,16 +49,34 @@
 						<a class="ml-2 btn btn-danger" asp-controller="Car" asp-action="Delete"
 				   asp-route-id="@Model.Id">Delete</a>
 					}
+					<a asp-controller="Review" asp-action="Create" asp-route-id="@Model.Id"
+				   class="btn btn-secondary">Leave your Review</a>
 					@if (!Model.IsRented)
 					{
 						<form class="ml-2" asp-controller="Order"
 					  asp-action="Create" asp-route-id="@Model.Id"
 					  method="post">
 							<input class="btn btn-primary" type="submit"
-						   value="Rent" />
+						   value="Book Now" />
 						</form>
 					}
 				}
+			</div>
+			<p></p>
+		</div>
+		<div class="card col-4 border-2">
+			<p style="font-size:25px;"><u>Reviews:</u></p>
+			@for (int i = 0; i < review.Count(); i++)
+			{
+				var thisReview = review[i];
+				<ul>
+					<p>Comment: <b>@thisReview.Comment</b></p>
+					<p>Rating: <b>@thisReview.Rating/5</b></p>
+					<hr></hr>
+				</ul>
+
+			}
+			<div class="form-inline">
 			</div>
 			<p></p>
 		</div>

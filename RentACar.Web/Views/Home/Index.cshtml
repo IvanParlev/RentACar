@@ -1,23 +1,39 @@
-﻿@model IEnumerable<IndexViewModel>
+﻿@using RentACar.Services.Data.Interfaces
+@model IEnumerable<ReviewDetailsViewModel>
+
+@inject ILocationService LocationService
+@{
+	IEnumerable<IndexViewModel> viewModel =
+						await this.LocationService.AllAddressesAsync();
+}
 
 @{
 	ViewData["Title"] = "Home";
-	var address = Model.ToList();
+	var address = viewModel.ToList();
+	var reviews = Model.Take(3)	                   
+	                   .ToList();
 }
+
+@inject ICarService CarService
+
 <!doctype html>
 <html lang="en">
 <body>
 	<div>
 		<main>
-			<h1>Rent a Car - Find and book your car!</h1>
-			<p class="fs-5 col-md-8">Rent A Car is the leading national car rental company in Bulgaria. We operate with the largest fleet in the country, most	 of which are brand new or up to 3 years old.</p>
+			<h1>Rent-A-Car - Find and book your car!</h1>
+			<p class="fs-4 col-md-10">
+				Rent A Car is the leading national car rental
+				company in Bulgaria. We operate with the largest fleet in the country,
+				most of which are brand new or up to 3 years old.
+			</p>
 			<hr />
 			<div class="row g-5">
 				<div class="col-md-6">
-					<h2 style="font-size:40px;">Locations</h2>
-					<p style="font-size:20px;">Rent a Car has offices in all major airports and cities of Bulgaria.</p>
-					
-					<ul class="list-group" style="font-size:22px;" >
+					<h2 style="font-size:40px;">Locations</h2>					
+					<p style="font-size:20px;">Rent A Car has offices in all major airports and cities of Bulgaria.</p>
+					<hr></hr>	
+					<ul class="list-group" style="font-size:22px;">
 						@for (int i = 0; i < address.Count(); i++)
 						{
 							var location = address[i];
@@ -28,9 +44,20 @@
 
 				<div class="col-md-6">
 					<h2 style="font-size:40px;">Reviews</h2>
-					<p style="font-size:20px;">Here are some of our reviews.</p>
-					<ul class="list-group">
-						<li></li>
+					<p style="font-size:20px;">Here are some of our recent reviews.</p>
+					<hr></hr>
+					<ul style="font-size:15px;" class="list-group">
+						@for (int i = 0; i < reviews.Count(); i++)
+						{
+							var review = reviews[i];
+							var carName = await this.CarService.GetDetailsByIdAsync(review.CarId);
+
+							<li class="border-2">
+								<h3>Reviewed Car - <b>@carName.CarModel</b></h3>							
+								<p>Comment: <b>@review.Comment</b></p>
+								<p>Given Rating: <b>@review.Rating/5</b></p>
+							</li>
+						}
 					</ul>
 				</div>
 			</div>

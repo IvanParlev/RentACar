@@ -16,10 +16,13 @@
         public decimal Price { get; set; }
 
         [Range(DaysRentedMinValue, DaysRentedMaxValue)]
+        [Display(Name = "Days Rented")]
         public int DaysRented { get; set; }
 
+        [Display(Name = "Pick Up")]
         public int PickUpLocationId { get; set; }
 
+        [Display(Name = "Drop Off")]
         public int ReturnLocationId { get; set; }
 
         public IEnumerable<OrderSelectLocationFormModel> Locations { get; set; }
