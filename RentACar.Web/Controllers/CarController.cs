@@ -148,7 +148,7 @@
 
             bool isUserAgent = await this.agentService
                 .AgentExistsByUserIdAsync(this.User.GetId()!);
-            if (!isUserAgent)
+            if (!isUserAgent && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become an agent in order to edit car info!";
 
@@ -190,7 +190,7 @@
 
             bool isUserAgent = await this.agentService
                 .AgentExistsByUserIdAsync(this.User.GetId()!);
-            if (!isUserAgent)
+            if (!isUserAgent && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become an agent in order to edit car info!";
 
@@ -227,9 +227,9 @@
 
             bool isUserAgent = await this.agentService
                 .AgentExistsByUserIdAsync(this.User.GetId()!);
-            if (!isUserAgent)
+            if (!isUserAgent && !this.User.IsAdmin())
             {
-                this.TempData[ErrorMessage] = "You must become an agent in order to edit car info!";
+                this.TempData[ErrorMessage] = "You must become an agent in order to delete a car!";
 
                 return this.RedirectToAction("Become", "Agent");
             }
@@ -261,9 +261,9 @@
 
             bool isUserAgent = await this.agentService
                 .AgentExistsByUserIdAsync(this.User.GetId()!);
-            if (!isUserAgent)
+            if (!isUserAgent && !this.User.IsAdmin())
             {
-                this.TempData[ErrorMessage] = "You must become an agent in order to edit car info!";
+                this.TempData[ErrorMessage] = "You must become an agent in order to delete a car!";
 
                 return this.RedirectToAction("Become", "Agent");
             }

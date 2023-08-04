@@ -42,7 +42,7 @@
 			<div class="form-inline">
 				@if (this.User.Identity?.IsAuthenticated ?? false)
 				{
-					@if (isUserAgent)
+					@if (isUserAgent || this.User.IsAdmin())
 					{
 						<a class="btn btn-warning" asp-controller="Car" asp-action="Edit"
 				   asp-route-id="@Model.Id">Edit</a>
