@@ -1,8 +1,9 @@
 ﻿namespace RentACar.Web.ViewModels.Car
 {
+    using System.ComponentModel.DataAnnotations;
+
     using RentACar.Data.Models.Enums;
     using RentACar.Web.ViewModels.Category;
-    using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.Car;
     using static Common.ApplicationConstants;

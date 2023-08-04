@@ -1,8 +1,8 @@
 ﻿namespace RentACar.Web.ViewModels.Order
 {
-    using RentACar.Data.Models;
-    using RentACar.Web.ViewModels.Location;
     using System.ComponentModel.DataAnnotations;
+
+    using RentACar.Web.ViewModels.Location;
 
     using static Common.EntityValidationConstants.Order;
 

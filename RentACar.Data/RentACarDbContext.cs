@@ -1,11 +1,12 @@
 ﻿namespace RentACar.Data
 {
+    using System.Reflection;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
     using RentACar.Data.Models;
-    using System.Reflection;
 
     public class RentACarDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {

@@ -1,8 +1,10 @@
 ﻿namespace RentACar.Services.Data
 {
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Threading.Tasks;
+    
+    using Microsoft.EntityFrameworkCore;
+
     using RentACar.Data.Models;
     using RentACar.Services.Data.Interfaces;
     using RentACar.Services.Data.Models.Car;

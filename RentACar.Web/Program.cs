@@ -2,14 +2,15 @@ namespace RentACar.Web
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-
-    using Data;
-    using RentACar.Data.Models;
-    using RentACar.Web.Infastructure.Extensions;
-    using RentACar.Services.Data.Interfaces;
     using Microsoft.AspNetCore.Mvc;
 
+    using Data;
+    using Data.Models;
+    using Web.Infastructure.Extensions;
+    using Services.Data.Interfaces;
+
     using static Common.ApplicationConstants;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -40,6 +41,8 @@ namespace RentACar.Web
                 .AddEntityFrameworkStores<RentACarDbContext>();
 
             builder.Services.AddApplicationServices(typeof(ILocationService));
+
+            builder.Services.AddRecaptchaService(); 
 
             builder.Services
                 .AddControllersWithViews()

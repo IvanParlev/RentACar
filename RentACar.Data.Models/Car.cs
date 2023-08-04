@@ -1,6 +1,7 @@
 ﻿namespace RentACar.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+
     using RentACar.Data.Models.Enums;
 
     using static Common.EntityValidationConstants.Car;

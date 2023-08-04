@@ -1,6 +1,6 @@
 ﻿namespace RentACar.Services.Data.Models.Car
 {
-	using RentACar.Web.ViewModels.Car;
+	using Web.ViewModels.Car;
 
 	public class AllCarsFilteredAndPagedServiceModel
 	{

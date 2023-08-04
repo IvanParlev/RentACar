@@ -2,11 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using RentACar.Data;
     using RentACar.Data.Models;
     using RentACar.Services.Data.Interfaces;
-    using RentACar.Web.ViewModels.Car;
     using RentACar.Web.ViewModels.Order;
 
     public class OrderService : IOrderService

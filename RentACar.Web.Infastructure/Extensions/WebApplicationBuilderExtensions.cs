@@ -1,9 +1,11 @@
 ﻿namespace RentACar.Web.Infastructure.Extensions
 {
     using System.Reflection;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+
     using RentACar.Data.Models;
 
     using static Common.ApplicationConstants;

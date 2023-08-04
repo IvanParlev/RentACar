@@ -1,30 +1,22 @@
 ﻿namespace RentACar.Web.Controllers
 {
-    using System.Diagnostics;
-
     using Microsoft.AspNetCore.Mvc;
+
     using RentACar.Services.Data.Interfaces;
-    using RentACar.Web.ViewModels.Car;
-    using RentACar.Web.ViewModels.Home;
-    using RentACar.Web.ViewModels.Location;
     using RentACar.Web.ViewModels.Review;
 
     public class HomeController : Controller
     {
-        private readonly ILocationService locationService;
-        private readonly ICarService carService;
         private readonly IReviewService reviewService;
 
-        public HomeController(ILocationService locationService, ICarService carService, IReviewService reviewService)
+        public HomeController(IReviewService reviewService)
         {
-            this.locationService = locationService;
-            this.carService = carService;
             this.reviewService = reviewService;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ReviewDetailsViewModel> reviewModel = 
+            IEnumerable<ReviewDetailsViewModel> reviewModel =
                 await this.reviewService.GetAllReviewsAsync();
 
             return View(reviewModel);

@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RentACar.Data;
-using RentACar.Data.Models;
-using RentACar.Services.Data.Interfaces;
-using RentACar.Web.ViewModels.Agent;
-
-namespace RentACar.Services.Data
+﻿namespace RentACar.Services.Data
 {
+    using Microsoft.EntityFrameworkCore;
+
+    using RentACar.Data;
+    using RentACar.Data.Models;
+    using RentACar.Services.Data.Interfaces;
+    using RentACar.Web.ViewModels.Agent;
+
     public class AgentService : IAgentService
     {
         private readonly RentACarDbContext dbContext;

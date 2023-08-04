@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     using RentACar.Data.Models;
 
     public class CarEntityConfiguration : IEntityTypeConfiguration<Car>

@@ -1,7 +1,8 @@
 ﻿namespace RentACar.Web.ViewModels.Car
 {
-    using RentACar.Data.Models.Enums;
     using System.ComponentModel.DataAnnotations;
+
+    using RentACar.Data.Models.Enums;
 
     public class CarAllViewModel
     {

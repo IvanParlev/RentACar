@@ -5,7 +5,6 @@
 
     using RentACar.Services.Data.Interfaces;
     using RentACar.Web.Infastructure.Extensions;
-    using RentACar.Web.ViewModels.Car;
     using RentACar.Web.ViewModels.Order;
 
     using static Common.NotificationMessagesConstants;
