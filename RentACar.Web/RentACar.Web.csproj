@@ -25,4 +25,8 @@
     <ProjectReference Include="..\RentACar.Web.ViewModels\RentACar.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\" />
+  </ItemGroup>
+
 </Project>

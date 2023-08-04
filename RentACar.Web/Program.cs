@@ -9,6 +9,7 @@ namespace RentACar.Web
     using RentACar.Services.Data.Interfaces;
     using Microsoft.AspNetCore.Mvc;
 
+    using static Common.ApplicationConstants;
     public class Program
     {
         public static void Main(string[] args)
@@ -35,6 +36,7 @@ namespace RentACar.Web
                 options.Password.RequiredLength =
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<RentACarDbContext>();
 
             builder.Services.AddApplicationServices(typeof(ILocationService));
@@ -69,6 +71,8 @@ namespace RentACar.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedAdministrator(DevelopmentAdminEmail);
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
