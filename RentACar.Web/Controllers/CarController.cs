@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
 
     using RentACar.Services.Data.Interfaces;
     using RentACar.Services.Data.Models.Car;
@@ -9,6 +10,7 @@
     using RentACar.Web.ViewModels.Car;
 
     using static Common.NotificationMessagesConstants;
+    using static Common.ApplicationConstants;
 
     [Authorize]
     public class CarController : Controller
@@ -17,13 +19,15 @@
         private readonly IAgentService agentService;
         private readonly ICarService carService;
         private readonly IOrderService orderService;
+        private readonly IMemoryCache memoryCache;
 
-        public CarController(ICategoryService categoryService, IAgentService agentService, ICarService carService, IOrderService orderService)
+        public CarController(ICategoryService categoryService, IAgentService agentService, ICarService carService, IOrderService orderService, IMemoryCache memoryCache)
         {
             this.categoryService = categoryService;
             this.agentService = agentService;
             this.carService = carService;
             this.orderService = orderService;
+            this.memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -303,6 +307,9 @@
                 return this.GeneralError();
                 
             }
+
+            this.memoryCache.Remove(OrdersCacheKey);    
+
             return this.RedirectToAction("Mine", "Order");
         }
 
