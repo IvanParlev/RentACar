@@ -19,6 +19,24 @@
             this.dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<OrderViewModel>> AllAsync()
+        {
+            IEnumerable<OrderViewModel> allOrders = await this.dbContext
+                .Orders
+                .Where(o => o.IsFinalized)
+                .Select(o => new OrderViewModel
+                {
+                    OrderId = o.Id.ToString(),
+                    CarModel = o.Car.Model,
+                    ImageUrl = o.Car.ImageUrl,
+                    RenterEmail = o.Renter.Email,
+                    IsRented = o.Car.RenterId.HasValue
+                })
+                .ToArrayAsync();
+
+            return allOrders;
+        }
+
         public async Task<IEnumerable<OrderDetailsViewModel>> AllByUserIdAsync(string userId)
         {          
             IEnumerable<OrderDetailsViewModel> allUsersOrders = await this.dbContext

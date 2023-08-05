@@ -1,0 +1,35 @@
+﻿@using RentACar.Web.ViewModels.Location
+@model IEnumerable<OrderViewModel>
+@{
+	ViewBag.Title = "All Orders";
+}
+
+@inject IOrderService OrderService
+@inject ILocationService LocationService
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="row">
+	@foreach (var order in Model)
+	{
+		var orderDetails = await this.OrderService.GetOrderDetailsAsync(order.OrderId);
+		OrderSelectLocationFormModel PickUplocationModel = await this.LocationService
+		.GetAddressById(orderDetails.PickUpLocationId);
+		OrderSelectLocationFormModel DropOfflocationModel = await this.LocationService
+		.GetAddressById(orderDetails.ReturnLocationId);
+
+		<div class="card mb-3 col-4">
+			<img class="card-img-top" src="@order.ImageUrl" alt="Car Image">
+			<div class="card-body text-center">
+				<h4>@order.CarModel</h4>
+				<h6>Ordered By: <b>(@order.RenterEmail)</b></h6>
+				<h6>Order Status: <b>@((order.IsRented ? "Finished" : "Awaits Confirmation"))</b></h6>
+				<h6>Rental Period: <b>@orderDetails.DaysRented Days</b></h6>
+				<h6>Rental Cost: <b>@orderDetails.Price BGN</b></h6>
+				<h6>Pick Up: <b>@PickUplocationModel.Address</b></h6>
+				<h6>Drop Off: <b>@DropOfflocationModel.Address</b></h6>
+			</div>
+		</div>
+	}
+</div>

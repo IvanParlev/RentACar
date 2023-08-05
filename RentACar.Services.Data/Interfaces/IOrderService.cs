@@ -12,5 +12,7 @@
         Task<OrderDetailsViewModel> GetOrderDetailsAsync(string orderId);
 
         Task<bool> ExistsByIdAsync(string id);
+
+        Task<IEnumerable<OrderViewModel>> AllAsync();
     }
 }
