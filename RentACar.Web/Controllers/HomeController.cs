@@ -5,6 +5,8 @@
     using RentACar.Services.Data.Interfaces;
     using RentACar.Web.ViewModels.Review;
 
+    using static Common.ApplicationConstants;
+
     public class HomeController : Controller
     {
         private readonly IReviewService reviewService;
@@ -16,6 +18,10 @@
 
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole(AdminRoleName))
+            {
+               return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
             IEnumerable<ReviewDetailsViewModel> reviewModel =
                 await this.reviewService.GetAllReviewsAsync();
 

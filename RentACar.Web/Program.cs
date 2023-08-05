@@ -42,7 +42,10 @@ namespace RentACar.Web
 
             builder.Services.AddApplicationServices(typeof(ILocationService));
 
-            builder.Services.AddRecaptchaService(); 
+            builder.Services.AddRecaptchaService();
+
+            
+
 
             builder.Services
                 .AddControllersWithViews()
@@ -76,6 +79,14 @@ namespace RentACar.Web
             app.UseAuthorization();
 
             app.SeedAdministrator(DevelopmentAdminEmail);
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                  name: "areas",
+                  pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+            });
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
