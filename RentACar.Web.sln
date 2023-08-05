@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Common", "Common\RentACar.Common.csproj", "{980B1E4B-35C2-4EA4-98B8-3B01592C3B7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{6557D851-DBA6-43B2-BA58-EF5B22B8ACA7}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.txt = ReadMe.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3074F61C-1F8C-45F3-9484-BB05286C5BF8}"
 EndProject
@@ -23,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Services.Data", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Web.Infastructure", "RentACar.Web.Infastructure\RentACar.Web.Infastructure.csproj", "{C78BA246-E03E-42E6-B6CD-1383520D10F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Services.Data.Models", "RentACar.Services.Data.Models\RentACar.Services.Data.Models.csproj", "{E3216A5E-B05A-4CC3-B5EB-A4D977C638D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Services.Data.Models", "RentACar.Services.Data.Models\RentACar.Services.Data.Models.csproj", "{E3216A5E-B05A-4CC3-B5EB-A4D977C638D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
