@@ -1,8 +1,5 @@
 ﻿@model CarAllViewModel
 
-@using RentACar.Services.Data.Interfaces
-@using RentACar.Web.Infastructure.Extensions
-
 @inject IAgentService AgentService
 @{
 	bool isUserAgent = await AgentService.AgentExistsByUserIdAsync(this.User.GetId());
