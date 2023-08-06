@@ -29,11 +29,6 @@ namespace RentACar.Services.Tests
             this.agentService = new AgentService(this.dbContext);
         }
 
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public async Task AgentExistsByUserIdAsyncShouldReturnTrueWhenExists()
         {
@@ -52,6 +47,16 @@ namespace RentACar.Services.Tests
             bool result = await this.agentService.AgentExistsByUserIdAsync(existingAgentUserId);
 
             Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task GetAgentIdByUserIdAsyncShouldReturnId()
+        {
+            string userId = AgentUser.Id.ToString();
+
+            string result = await this.agentService.GetAgentIdByUserIdAsync(userId);
+
+            Assert.That(result != null);
         }
     }
 }

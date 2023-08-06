@@ -8,6 +8,8 @@
         public static ApplicationUser AgentUser;
         public static ApplicationUser RenterUser;
         public static Agent Agent;
+        public static Location Location;
+        public static Category Category;
 
         public static void SeedDatabase(RentACarDbContext dbContext)
         {
@@ -42,9 +44,24 @@
                 Name = "Agent",
                 User = AgentUser
             };
+         
+            Location = new Location()
+            {
+                Id = 15,
+                Address = "Sofia"
+            };
+
+            Category = new Category()
+            {
+                Id = 5,
+                Name = "Cabriolet"
+            };
+
             dbContext.Users.Add(AgentUser);
             dbContext.Users.Add(RenterUser);
             dbContext.Agents.Add(Agent);
+            dbContext.Locations.Add(Location);
+            dbContext.Categories.Add(Category);
 
             dbContext.SaveChanges();
         }
