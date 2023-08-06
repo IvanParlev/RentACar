@@ -8,12 +8,12 @@
 
     using static DatabaseSeeder;
 
-    public class LocationServiceTests
+    public class ReviewServiceTests
     {
         private DbContextOptions<RentACarDbContext> dbOptions;
         private RentACarDbContext dbContext;
 
-        private ILocationService locationService;
+        private IReviewService reviewService;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -26,35 +26,25 @@
             this.dbContext.Database.EnsureCreated();
             SeedDatabase(this.dbContext);
 
-            this.locationService = new LocationService(this.dbContext);
-
-
+            this.reviewService = new ReviewService(this.dbContext);
         }
 
         [Test]
-        public async Task LocationExistsByIdShouldReturnTrue()
+        public async Task ShouldReturnAllReviews()
         {
-            int locationId = Location.Id;
+            var allReviews = await this.reviewService.GetAllReviewsAsync();
 
-            var result = await this.locationService.ExistsByIdAsync(locationId);
-
-            Assert.IsTrue(result);
+            Assert.AreNotEqual(allReviews, null);
         }
 
         [Test]
-        public async Task GetAddressByIdShouldReturnAddressById()
-        {
-            var result = await this.locationService.GetAddressById(Location.Id);
+        public async Task GetReviewsByCarIdShouldReturnReviewsOfCar()
+        {    
+            var allReviews = await this.reviewService.GetReviewsByCarIdAsync(Review.CarId);
 
-            Assert.That(Location.Address, Is.EqualTo(result.Address));
+            Assert.AreNotEqual(allReviews, null);
         }
 
-        [Test]
-        public async Task ShouldReturnAllAdresses()
-        {
-            var allAdresses = await this.locationService.AllAddressesAsync();
-
-            Assert.True(allAdresses != null);
-        }
+        
     }
 }

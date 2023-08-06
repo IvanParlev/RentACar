@@ -10,6 +10,7 @@
         public static Agent Agent;
         public static Location Location;
         public static Category Category;
+        public static Review Review;
 
         public static void SeedDatabase(RentACarDbContext dbContext)
         {
@@ -57,11 +58,19 @@
                 Name = "Cabriolet"
             };
 
+            Review = new Review()
+            {
+                CarId = 1,
+                Rating = 5,
+                Comment = "Very Nice Car"
+            };
+
             dbContext.Users.Add(AgentUser);
             dbContext.Users.Add(RenterUser);
             dbContext.Agents.Add(Agent);
             dbContext.Locations.Add(Location);
             dbContext.Categories.Add(Category);
+            dbContext.Reviews.Add(Review);
 
             dbContext.SaveChanges();
         }
