@@ -6,6 +6,10 @@
 				.GetDetailsByIdAsync(Model.CarId);
 }
 
+@{
+	var renter = await this.CarService.GetDetailsByIdAsync(Model.CarId);
+}
+
 <div class="col-md-5">
 	<div class="card mb-3">
 		<img class="card-img-top" src="@viewModel.ImageUrl" alt="Car Image">
@@ -17,7 +21,17 @@
 				Price of your order:
 				<b>@String.Format("{0:f2}", Model.Price) BGN</b>
 			</h6>
-			<h6 style="">(@(viewModel.IsRented ? "Rented" : "Waiting for final confirmation"))</h6>
+			@if (viewModel.IsRented)
+			{
+				@if (renter.RenterId.ToString() != User.GetId().ToString())
+				{
+					<h6 style="color:red"><b>Already rented by another User</b></h6>
+				}
+				else
+				{
+					<h6 style="">(@(viewModel.IsRented ? "Rented" : "Waiting for final confirmation"))</h6>
+				}	
+			}
 			<br />
 			@if (!viewModel.IsRented)
 			{
@@ -28,7 +42,7 @@
 					   value="Confrim" />
 				</form>
 				<br />
-			}			
+			}
 			<a asp-controller="Order" asp-action="Details" asp-route-id="@Model.Id"
 			   class="btn btn-success">Details of your order</a>
 		</div>

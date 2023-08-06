@@ -2,10 +2,12 @@
 {
     public class CarDetailsViewModel : CarAllViewModel
     {
-		public string? Description { get; set; }
+        public Guid? RenterId { get; set; }
+
+        public string? Description { get; set; }
 
 		public int NumberOfSeats { get; set; }
 
-		public string Category { get; set; } = null!;
+        public string Category { get; set; } = null!;
 	}
 }

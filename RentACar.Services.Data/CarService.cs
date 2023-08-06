@@ -194,6 +194,7 @@
                 FuelType = car.FuelType,
                 Description = car.Description,
                 NumberOfSeats = car.NumberOfSeats,
+                RenterId = car.RenterId,
                 IsRented = car.RenterId.HasValue
             };
         }
