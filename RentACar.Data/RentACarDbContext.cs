@@ -13,6 +13,7 @@
         public RentACarDbContext(DbContextOptions<RentACarDbContext> options)
             : base(options)
         {
+           
         }
 
         public DbSet<Car> Cars { get; set; } = null!;
