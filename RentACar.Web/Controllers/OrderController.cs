@@ -40,7 +40,7 @@
             {
                 this.TempData[ErrorMessage] = "Selected car is already rented! Please select another car!";
 
-                return this.RedirectToAction("All", "Car ");
+                return this.RedirectToAction("All", "Car");
             }
 
             try
