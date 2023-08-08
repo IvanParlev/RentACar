@@ -11,6 +11,7 @@
         public static Location Location;
         public static Category Category;
         public static Review Review;
+        public static Order Order;
 
         public static void SeedDatabase(RentACarDbContext dbContext)
         {
@@ -65,12 +66,35 @@
                 Comment = "Very Nice Car"
             };
 
+            //Order = new Order()
+            //{
+            //    CarId = 2,
+            //    DaysRented = 2,
+            //    Price = 200,
+            //    PickUpLocationId = 6,
+            //    ReturnLocationId = 3,
+            //    IsFinalized = true,
+            //    RenterId = Guid.Parse("88899F53-2C6A-4624-17E3-08DB822F58CA") 
+            //};
+            //dbContext.Orders.Add(Order);
+            Order = new Order()
+            {
+                CarId = 1,
+                DaysRented = 2,
+                Price = 160,
+                PickUpLocationId = 2,
+                ReturnLocationId = 6,
+                IsFinalized = true,
+                RenterId = RenterUser.Id,
+            };
             dbContext.Users.Add(AgentUser);
             dbContext.Users.Add(RenterUser);
             dbContext.Agents.Add(Agent);
             dbContext.Locations.Add(Location);
             dbContext.Categories.Add(Category);
             dbContext.Reviews.Add(Review);
+            dbContext.Orders.Add(Order);
+
 
             dbContext.SaveChanges();
         }
