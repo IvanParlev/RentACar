@@ -12,6 +12,9 @@
         public static Category Category;
         public static Review Review;
         public static Order Order;
+        public static Car Car;
+        public static Car CarToDelete;
+        public static Car CarToRent;
 
         public static void SeedDatabase(RentACarDbContext dbContext)
         {
@@ -46,7 +49,7 @@
                 Name = "Agent",
                 User = AgentUser
             };
-         
+
             Location = new Location()
             {
                 Id = 15,
@@ -66,20 +69,9 @@
                 Comment = "Very Nice Car"
             };
 
-            //Order = new Order()
-            //{
-            //    CarId = 2,
-            //    DaysRented = 2,
-            //    Price = 200,
-            //    PickUpLocationId = 6,
-            //    ReturnLocationId = 3,
-            //    IsFinalized = true,
-            //    RenterId = Guid.Parse("88899F53-2C6A-4624-17E3-08DB822F58CA") 
-            //};
-            //dbContext.Orders.Add(Order);
             Order = new Order()
             {
-                CarId = 1,
+                CarId = 22,
                 DaysRented = 2,
                 Price = 160,
                 PickUpLocationId = 2,
@@ -87,6 +79,58 @@
                 IsFinalized = true,
                 RenterId = RenterUser.Id,
             };
+
+            Car = new Car()
+            {
+                Id = 20,
+                Model = "BMW X6",
+                Year = 2022,
+                NumberOfSeats = 5,
+                GearboxType = (RentACar.Data.Models.Enums.GearboxType)2,
+                FuelType = (RentACar.Data.Models.Enums.FuelType)1,
+                Description = null,
+                PricePerDay = 170,
+                ImageUrl = "https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x6-m-competition-103-1569964622.jpg?crop=0.867xw:0.651xh;0.0112xw,0.281xh&resize=1200:*",
+                CategoryId = 3,
+                AgentId = AgentUser.Id,
+                RenterId = RenterUser.Id,
+                IsActive = true,
+            };
+
+            CarToDelete = new Car()
+            {
+                Id = 21,
+                Model = "BMW X6",
+                Year = 2022,
+                NumberOfSeats = 5,
+                GearboxType = (RentACar.Data.Models.Enums.GearboxType)2,
+                FuelType = (RentACar.Data.Models.Enums.FuelType)1,
+                Description = null,
+                PricePerDay = 170,
+                ImageUrl = "https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x6-m-competition-103-1569964622.jpg?crop=0.867xw:0.651xh;0.0112xw,0.281xh&resize=1200:*",
+                CategoryId = 3,
+                AgentId = AgentUser.Id,
+                RenterId = RenterUser.Id,
+                IsActive = true,
+            };
+            
+            CarToRent = new Car()
+            {
+                Id = 22,
+                Model = "BMW X6",
+                Year = 2022,
+                NumberOfSeats = 5,
+                GearboxType = (RentACar.Data.Models.Enums.GearboxType)2,
+                FuelType = (RentACar.Data.Models.Enums.FuelType)1,
+                Description = null,
+                PricePerDay = 170,
+                ImageUrl = "https://hips.hearstapps.com/hmg-prod/images/2020-bmw-x6-m-competition-103-1569964622.jpg?crop=0.867xw:0.651xh;0.0112xw,0.281xh&resize=1200:*",
+                CategoryId = 3,
+                AgentId = AgentUser.Id,
+                RenterId = null,
+                IsActive = true,
+            };
+
             dbContext.Users.Add(AgentUser);
             dbContext.Users.Add(RenterUser);
             dbContext.Agents.Add(Agent);
@@ -94,6 +138,9 @@
             dbContext.Categories.Add(Category);
             dbContext.Reviews.Add(Review);
             dbContext.Orders.Add(Order);
+            dbContext.Cars.Add(Car);
+            dbContext.Cars.Add(CarToDelete);
+            dbContext.Cars.Add(CarToRent);
 
 
             dbContext.SaveChanges();
