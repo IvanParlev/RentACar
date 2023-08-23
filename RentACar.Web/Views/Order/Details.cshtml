@@ -33,21 +33,6 @@
 			<p style="font-size:20px;">Drop Off: <b>@ReturnlocationModel.Address</b></p>
 			<p style="font-size:20px;">Rental Cost: <b>@Model.Price BGN</b></p>
 
-			@if (this.User.Identity?.IsAuthenticated ?? false)
-			{
-				@if (!viewModel.IsRented)
-				{
-					<div style="margin-right:50px">
-						<form class="ml-2" asp-controller="Car"
-					  asp-action="Rent" asp-route-id="@Model.Id"
-					  method="post">
-							<input class="btn btn-primary" type="submit"
-						   value="Confrim" />
-						</form>
-
-					</div>
-				}
-			}
 		</div>
 		<div class="card col-3 border-2">
 			<p style="font-size:25px;"><u>@viewModel.CarModel</u></p>

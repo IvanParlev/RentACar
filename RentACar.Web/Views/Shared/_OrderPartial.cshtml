@@ -30,7 +30,11 @@
 				else
 				{
 					<h6 style="">(@(viewModel.IsRented ? "Rented" : "Waiting for final confirmation"))</h6>
-				}	
+				}
+			}
+			else
+			{
+				<h6 style="">(@(viewModel.IsRented ? "Rented" : "Waiting for final confirmation"))</h6>
 			}
 			<br />
 			@if (!viewModel.IsRented)
